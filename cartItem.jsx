@@ -1,12 +1,18 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeItem, updateQuantity } from "../features/CartSlice";
+import { useNavigate } from "react-router-dom";
 
 function CartItem() {
+  // Get current cart items from Redux state
   const cart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // Calculate total cart amount (sum of price * quantity for each item)
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+  // If cart is empty, display a message and a button to continue shopping
   if (cart.length === 0) {
     return (
       <div className="cart-container">
@@ -14,7 +20,7 @@ function CartItem() {
         <p>Your cart is empty.</p>
         <button
           className="get-started-button"
-          onClick={() => (window.location.href = "/")}
+          onClick={() => navigate("/products")}
         >
           Continue Shopping
         </button>
@@ -22,6 +28,7 @@ function CartItem() {
     );
   }
 
+  // If there are items in the cart, display them
   return (
     <div className="cart-container">
       <h2>Your Cart</h2>
@@ -67,7 +74,7 @@ function CartItem() {
       <button onClick={() => alert("Coming Soon")}>Checkout</button>
       <button
         className="get-started-button"
-        onClick={() => (window.location.href = "/")}
+        onClick={() => navigate("/products")}
       >
         Continue Shopping
       </button>
