@@ -1,39 +1,29 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-} from "react-router-dom";
+import React, { useState } from "react";
 import ProductList from "./components/ProductList";
 import AboutUs from "./components/AboutUs";
 import CartItem from "./components/CartItem";
 import Navbar from "./components/Navbar";
 
-function Landing() {
-  const navigate = useNavigate();
-  return (
-    <div className="landing-page">
-      <h1 className="landing-title">Paradise Nursery</h1>
-      <button className="landing-btn" onClick={() => navigate("/products")}>
-        Get Started
-      </button>
-    </div>
-  );
-}
-
 function App() {
+  const [showProducts, setShowProducts] = useState(false);
+
   return (
-    <Router>
+    <div>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/products" element={<ProductList />} />
-        <Route path="/cart" element={<CartItem />} />
-      </Routes>
-    </Router>
+      {!showProducts ? (
+        <div className="background-image">
+          <h1>Welcome to Paradise Nursery</h1>
+          <button
+            className="get-started-button"
+            onClick={() => setShowProducts(true)}
+          >
+            Get Started
+          </button>
+        </div>
+      ) : (
+        <ProductList />
+      )}
+    </div>
   );
 }
 
